@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CI_LAB" shortDescription="Upstream cFS native_std CPU2: CI_LAB">
+<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CI_LAB" shortDescription="Upstream cFS native_std APU: CI_LAB">
   <Header version="1.0" validationStatus="Draft" />
   <TelemetryMetaData>
     <ParameterTypeSet>

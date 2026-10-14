@@ -16,59 +16,61 @@ mdb:
     subLoaders:
       - type: xtce
         args:
-          file: mdb/cpu1.xml
+          file: mdb/rpu.xml
         subLoaders:
           - type: xtce
             args:
-              file: mdb/cpu1/cfe_es.xml
+              file: mdb/rpu/cfe_es.xml
           - type: xtce
             args:
-              file: mdb/cpu1/cfe_evs.xml
+              file: mdb/rpu/cfe_evs.xml
           - type: xtce
             args:
-              file: mdb/cpu1/cfe_sb.xml
+              file: mdb/rpu/cfe_sb.xml
           - type: xtce
             args:
-              file: mdb/cpu1/cfe_tbl.xml
+              file: mdb/rpu/cfe_tbl.xml
           - type: xtce
             args:
-              file: mdb/cpu1/cfe_time.xml
+              file: mdb/rpu/cfe_time.xml
           - type: xtce
             args:
-              file: mdb/cpu1/to_lab.xml
+              file: mdb/rpu/to_lab.xml
           - type: xtce
             args:
-              file: mdb/cpu1/ci_lab.xml
+              file: mdb/rpu/ci_lab.xml
       - type: xtce
         args:
-          file: mdb/cpu2.xml
+          file: mdb/apu.xml
         subLoaders:
           - type: xtce
             args:
-              file: mdb/cpu2/cfe_es.xml
+              file: mdb/apu/cfe_es.xml
           - type: xtce
             args:
-              file: mdb/cpu2/cfe_evs.xml
+              file: mdb/apu/cfe_evs.xml
           - type: xtce
             args:
-              file: mdb/cpu2/cfe_sb.xml
+              file: mdb/apu/cfe_sb.xml
           - type: xtce
             args:
-              file: mdb/cpu2/cfe_tbl.xml
+              file: mdb/apu/cfe_tbl.xml
           - type: xtce
             args:
-              file: mdb/cpu2/cfe_time.xml
+              file: mdb/apu/cfe_time.xml
           - type: xtce
             args:
-              file: mdb/cpu2/to_lab.xml
+              file: mdb/apu/to_lab.xml
           - type: xtce
             args:
-              file: mdb/cpu2/ci_lab.xml
+              file: mdb/apu/ci_lab.xml
 
 dataLinks:
   - name: to_lab_tm
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_realtime
+    # to_lab sends to 2234 + processor ID - 1. The APU (processor 1) is
+    # relayed from meg2 (10.42.0.1:2234) over Tailscale; the RPU uses 2235.
     port: 2234
     maxLength: 65535
     packetPreprocessorClassName: org.yamcs.tctm.cfs.CfsPacketPreprocessor
@@ -80,7 +82,9 @@ dataLinks:
   - name: ci_lab_tc
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
-    host: 127.0.0.1
+    # meg2 (Tailscale) relays to the APU ci_lab. ci_lab listens on
+    # 1234 + processor ID - 1: 1234 for the APU, 1235 for the RPU.
+    host: 100.127.121.83
     port: 1234
     commandPostprocessorClassName: org.yamcs.tctm.cfs.CfsCommandPostprocessor
     commandPostprocessorArgs:
@@ -94,8 +98,8 @@ streamConfig:
   tc:
     - name: tc_realtime
       processor: realtime
-      # CPU1 ingests commands and SBN forwards CPU2 MIDs to CPU2.
-      tcPatterns: ["/cFS/CPU1/.*", "/cFS/CPU2/.*"]
+      # The RPU ingests commands and SBN forwards APU MIDs to the APU.
+      tcPatterns: ["/cFS/RPU/.*", "/cFS/APU/.*"]
   cmdHist: [cmdhist_realtime]
   event: [events_realtime]
   param: [pp_realtime]

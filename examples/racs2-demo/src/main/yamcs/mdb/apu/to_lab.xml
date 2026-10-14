@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="TO_LAB" shortDescription="Upstream cFS native_std CPU1: TO_LAB">
+<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="TO_LAB" shortDescription="Upstream cFS native_std APU: TO_LAB">
   <Header version="1.0" validationStatus="Draft" />
   <TelemetryMetaData>
     <ParameterTypeSet>
@@ -56,7 +56,7 @@
       <Parameter name="TO_LAB_DataTypesTlm_Payload_str" parameterTypeRef="string80_leastSignificantByteFirst" shortDescription="Payload.str (char [10])" />
     </ParameterSet>
     <ContainerSet>
-      <SequenceContainer name="TO_LAB_HkTlm" shortDescription="TO_LAB_HkTlm_t; MID=0x0880; sizeof=18">
+      <SequenceContainer name="TO_LAB_HkTlm" shortDescription="TO_LAB_HkTlm_t; MID=0x0980; sizeof=18">
         <EntryList>
           <ParameterRefEntry parameterRef="TO_LAB_HkTlm_Payload_CommandCounter">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -71,11 +71,11 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x0880" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x0980" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
-      <SequenceContainer name="TO_LAB_DataTypesTlm" shortDescription="TO_LAB_DataTypesTlm_t; MID=0x0881; sizeof=80">
+      <SequenceContainer name="TO_LAB_DataTypesTlm" shortDescription="TO_LAB_DataTypesTlm_t; MID=0x0981; sizeof=80">
         <EntryList>
           <ParameterRefEntry parameterRef="TO_LAB_DataTypesTlm_Payload_synch">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -160,7 +160,7 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x0881" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x0981" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
@@ -186,10 +186,10 @@
       </StringArgumentType>
     </ArgumentTypeSet>
     <MetaCommandSet>
-      <MetaCommand name="TO_LAB_NoopCmd" shortDescription="TO_LAB_NoopCmd_t; MID=0x1880; FC=0; sizeof=8">
+      <MetaCommand name="TO_LAB_NoopCmd" shortDescription="TO_LAB_NoopCmd_t; MID=0x1980; FC=0; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -202,10 +202,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_ResetCountersCmd" shortDescription="TO_LAB_ResetCountersCmd_t; MID=0x1880; FC=1; sizeof=8">
+      <MetaCommand name="TO_LAB_ResetCountersCmd" shortDescription="TO_LAB_ResetCountersCmd_t; MID=0x1980; FC=1; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="1" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -218,10 +218,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_SendDataTypesCmd" shortDescription="TO_LAB_SendDataTypesCmd_t; MID=0x1880; FC=3; sizeof=8">
+      <MetaCommand name="TO_LAB_SendDataTypesCmd" shortDescription="TO_LAB_SendDataTypesCmd_t; MID=0x1980; FC=3; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="3" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -234,10 +234,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_AddPacketCmd" shortDescription="TO_LAB_AddPacketCmd_t; MID=0x1880; FC=2; sizeof=16">
+      <MetaCommand name="TO_LAB_AddPacketCmd" shortDescription="TO_LAB_AddPacketCmd_t; MID=0x1980; FC=2; sizeof=16">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="9" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="2" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -278,10 +278,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_RemovePacketCmd" shortDescription="TO_LAB_RemovePacketCmd_t; MID=0x1880; FC=4; sizeof=12">
+      <MetaCommand name="TO_LAB_RemovePacketCmd" shortDescription="TO_LAB_RemovePacketCmd_t; MID=0x1980; FC=4; sizeof=12">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="5" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="4" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -303,10 +303,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_RemoveAllCmd" shortDescription="TO_LAB_RemoveAllCmd_t; MID=0x1880; FC=5; sizeof=8">
+      <MetaCommand name="TO_LAB_RemoveAllCmd" shortDescription="TO_LAB_RemoveAllCmd_t; MID=0x1980; FC=5; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="5" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -319,10 +319,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_EnableOutputCmd" shortDescription="TO_LAB_EnableOutputCmd_t; MID=0x1880; FC=6; sizeof=24">
+      <MetaCommand name="TO_LAB_EnableOutputCmd" shortDescription="TO_LAB_EnableOutputCmd_t; MID=0x1980; FC=6; sizeof=24">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1880" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1980" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="17" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="6" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -344,10 +344,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="TO_LAB_SendHkCmd" shortDescription="TO_LAB_SendHkCmd_t; MID=0x1881; FC=0; sizeof=8">
+      <MetaCommand name="TO_LAB_SendHkCmd" shortDescription="TO_LAB_SendHkCmd_t; MID=0x1981; FC=0; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1881" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1981" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />

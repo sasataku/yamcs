@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CFE_EVS" shortDescription="Upstream cFS native_std CPU2: CFE_EVS">
+<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CFE_EVS" shortDescription="Upstream cFS native_std RPU: CFE_EVS">
   <Header version="1.0" validationStatus="Draft" />
   <TelemetryMetaData>
     <ParameterTypeSet>
@@ -127,7 +127,7 @@
       <Parameter name="CFE_EVS_ShortEventTlm_Payload_PacketID_ProcessorID" parameterTypeRef="unsigned32_leastSignificantByteFirst" shortDescription="Payload.PacketID.ProcessorID (uint32)" />
     </ParameterSet>
     <ContainerSet>
-      <SequenceContainer name="CFE_EVS_HousekeepingTlm" shortDescription="CFE_EVS_HousekeepingTlm_t; MID=0x0901; sizeof=160">
+      <SequenceContainer name="CFE_EVS_HousekeepingTlm" shortDescription="CFE_EVS_HousekeepingTlm_t; MID=0x0801; sizeof=160">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_EVS_HousekeepingTlm_Payload_CommandCounter">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -522,11 +522,11 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x0901" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x0801" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
-      <SequenceContainer name="CFE_EVS_LongEventTlm" shortDescription="CFE_EVS_LongEventTlm_t; MID=0x0908; sizeof=172">
+      <SequenceContainer name="CFE_EVS_LongEventTlm" shortDescription="CFE_EVS_LongEventTlm_t; MID=0x0808; sizeof=172">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_EVS_LongEventTlm_Payload_PacketID_AppName">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -571,11 +571,11 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x0908" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x0808" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
-      <SequenceContainer name="CFE_EVS_ShortEventTlm" shortDescription="CFE_EVS_ShortEventTlm_t; MID=0x0909; sizeof=48">
+      <SequenceContainer name="CFE_EVS_ShortEventTlm" shortDescription="CFE_EVS_ShortEventTlm_t; MID=0x0809; sizeof=48">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_EVS_ShortEventTlm_Payload_PacketID_AppName">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -605,7 +605,7 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x0909" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x0809" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
@@ -641,10 +641,10 @@
       </StringArgumentType>
     </ArgumentTypeSet>
     <MetaCommandSet>
-      <MetaCommand name="CFE_EVS_NoopCmd" shortDescription="CFE_EVS_NoopCmd_t; MID=0x1901; FC=0; sizeof=8">
+      <MetaCommand name="CFE_EVS_NoopCmd" shortDescription="CFE_EVS_NoopCmd_t; MID=0x1801; FC=0; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -657,10 +657,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_ResetCountersCmd" shortDescription="CFE_EVS_ResetCountersCmd_t; MID=0x1901; FC=1; sizeof=8">
+      <MetaCommand name="CFE_EVS_ResetCountersCmd" shortDescription="CFE_EVS_ResetCountersCmd_t; MID=0x1801; FC=1; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="1" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -673,10 +673,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_EnableEventTypeCmd" shortDescription="CFE_EVS_EnableEventTypeCmd_t; MID=0x1901; FC=2; sizeof=10">
+      <MetaCommand name="CFE_EVS_EnableEventTypeCmd" shortDescription="CFE_EVS_EnableEventTypeCmd_t; MID=0x1801; FC=2; sizeof=10">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="3" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="2" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -704,10 +704,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_DisableEventTypeCmd" shortDescription="CFE_EVS_DisableEventTypeCmd_t; MID=0x1901; FC=3; sizeof=10">
+      <MetaCommand name="CFE_EVS_DisableEventTypeCmd" shortDescription="CFE_EVS_DisableEventTypeCmd_t; MID=0x1801; FC=3; sizeof=10">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="3" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="3" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -735,10 +735,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_SetEventFormatModeCmd" shortDescription="CFE_EVS_SetEventFormatModeCmd_t; MID=0x1901; FC=4; sizeof=10">
+      <MetaCommand name="CFE_EVS_SetEventFormatModeCmd" shortDescription="CFE_EVS_SetEventFormatModeCmd_t; MID=0x1801; FC=4; sizeof=10">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="3" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="4" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -766,10 +766,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_EnableAppEventTypeCmd" shortDescription="CFE_EVS_EnableAppEventTypeCmd_t; MID=0x1901; FC=5; sizeof=30">
+      <MetaCommand name="CFE_EVS_EnableAppEventTypeCmd" shortDescription="CFE_EVS_EnableAppEventTypeCmd_t; MID=0x1801; FC=5; sizeof=30">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="23" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="5" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -803,10 +803,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_DisableAppEventTypeCmd" shortDescription="CFE_EVS_DisableAppEventTypeCmd_t; MID=0x1901; FC=6; sizeof=30">
+      <MetaCommand name="CFE_EVS_DisableAppEventTypeCmd" shortDescription="CFE_EVS_DisableAppEventTypeCmd_t; MID=0x1801; FC=6; sizeof=30">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="23" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="6" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -840,10 +840,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_EnableAppEventsCmd" shortDescription="CFE_EVS_EnableAppEventsCmd_t; MID=0x1901; FC=7; sizeof=28">
+      <MetaCommand name="CFE_EVS_EnableAppEventsCmd" shortDescription="CFE_EVS_EnableAppEventsCmd_t; MID=0x1801; FC=7; sizeof=28">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="21" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="7" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -865,10 +865,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_DisableAppEventsCmd" shortDescription="CFE_EVS_DisableAppEventsCmd_t; MID=0x1901; FC=8; sizeof=28">
+      <MetaCommand name="CFE_EVS_DisableAppEventsCmd" shortDescription="CFE_EVS_DisableAppEventsCmd_t; MID=0x1801; FC=8; sizeof=28">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="21" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="8" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -890,10 +890,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_ResetAppCounterCmd" shortDescription="CFE_EVS_ResetAppCounterCmd_t; MID=0x1901; FC=9; sizeof=28">
+      <MetaCommand name="CFE_EVS_ResetAppCounterCmd" shortDescription="CFE_EVS_ResetAppCounterCmd_t; MID=0x1801; FC=9; sizeof=28">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="21" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="9" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -915,10 +915,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_SetFilterCmd" shortDescription="CFE_EVS_SetFilterCmd_t; MID=0x1901; FC=10; sizeof=32">
+      <MetaCommand name="CFE_EVS_SetFilterCmd" shortDescription="CFE_EVS_SetFilterCmd_t; MID=0x1801; FC=10; sizeof=32">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="25" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="10" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -952,10 +952,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_EnablePortsCmd" shortDescription="CFE_EVS_EnablePortsCmd_t; MID=0x1901; FC=11; sizeof=10">
+      <MetaCommand name="CFE_EVS_EnablePortsCmd" shortDescription="CFE_EVS_EnablePortsCmd_t; MID=0x1801; FC=11; sizeof=10">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="3" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="11" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -983,10 +983,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_DisablePortsCmd" shortDescription="CFE_EVS_DisablePortsCmd_t; MID=0x1901; FC=12; sizeof=10">
+      <MetaCommand name="CFE_EVS_DisablePortsCmd" shortDescription="CFE_EVS_DisablePortsCmd_t; MID=0x1801; FC=12; sizeof=10">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="3" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="12" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1014,10 +1014,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_ResetFilterCmd" shortDescription="CFE_EVS_ResetFilterCmd_t; MID=0x1901; FC=13; sizeof=30">
+      <MetaCommand name="CFE_EVS_ResetFilterCmd" shortDescription="CFE_EVS_ResetFilterCmd_t; MID=0x1801; FC=13; sizeof=30">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="23" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="13" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1045,10 +1045,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_ResetAllFiltersCmd" shortDescription="CFE_EVS_ResetAllFiltersCmd_t; MID=0x1901; FC=14; sizeof=28">
+      <MetaCommand name="CFE_EVS_ResetAllFiltersCmd" shortDescription="CFE_EVS_ResetAllFiltersCmd_t; MID=0x1801; FC=14; sizeof=28">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="21" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="14" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1070,10 +1070,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_AddEventFilterCmd" shortDescription="CFE_EVS_AddEventFilterCmd_t; MID=0x1901; FC=15; sizeof=32">
+      <MetaCommand name="CFE_EVS_AddEventFilterCmd" shortDescription="CFE_EVS_AddEventFilterCmd_t; MID=0x1801; FC=15; sizeof=32">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="25" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="15" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1107,10 +1107,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_DeleteEventFilterCmd" shortDescription="CFE_EVS_DeleteEventFilterCmd_t; MID=0x1901; FC=16; sizeof=30">
+      <MetaCommand name="CFE_EVS_DeleteEventFilterCmd" shortDescription="CFE_EVS_DeleteEventFilterCmd_t; MID=0x1801; FC=16; sizeof=30">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="23" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="16" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1138,10 +1138,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_WriteAppDataFileCmd" shortDescription="CFE_EVS_WriteAppDataFileCmd_t; MID=0x1901; FC=17; sizeof=72">
+      <MetaCommand name="CFE_EVS_WriteAppDataFileCmd" shortDescription="CFE_EVS_WriteAppDataFileCmd_t; MID=0x1801; FC=17; sizeof=72">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="65" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="17" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1163,10 +1163,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_SetLogModeCmd" shortDescription="CFE_EVS_SetLogModeCmd_t; MID=0x1901; FC=19; sizeof=10">
+      <MetaCommand name="CFE_EVS_SetLogModeCmd" shortDescription="CFE_EVS_SetLogModeCmd_t; MID=0x1801; FC=19; sizeof=10">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="3" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="19" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1194,10 +1194,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_ClearLogCmd" shortDescription="CFE_EVS_ClearLogCmd_t; MID=0x1901; FC=20; sizeof=8">
+      <MetaCommand name="CFE_EVS_ClearLogCmd" shortDescription="CFE_EVS_ClearLogCmd_t; MID=0x1801; FC=20; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="20" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1210,10 +1210,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_WriteLogDataFileCmd" shortDescription="CFE_EVS_WriteLogDataFileCmd_t; MID=0x1901; FC=18; sizeof=72">
+      <MetaCommand name="CFE_EVS_WriteLogDataFileCmd" shortDescription="CFE_EVS_WriteLogDataFileCmd_t; MID=0x1801; FC=18; sizeof=72">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1901" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1801" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="65" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="18" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1235,10 +1235,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_EVS_SendHkCmd" shortDescription="CFE_EVS_SendHkCmd_t; MID=0x1909; FC=0; sizeof=8">
+      <MetaCommand name="CFE_EVS_SendHkCmd" shortDescription="CFE_EVS_SendHkCmd_t; MID=0x1809; FC=0; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1909" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1809" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />

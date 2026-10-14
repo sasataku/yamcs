@@ -10,7 +10,7 @@
     "ci_lab": "edb8ddf53076128a125b373b3b870f75e1d82d04"
   },
   "manifests": {
-    "CPU1": "cpu1/cfs.manifest.json",
-    "CPU2": "cpu2/cfs.manifest.json"
+    "RPU": "rpu/cfs.manifest.json",
+    "APU": "apu/cfs.manifest.json"
   }
 }

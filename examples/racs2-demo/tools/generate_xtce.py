@@ -17,6 +17,9 @@ import xml.etree.ElementTree as ET
 NS = 'http://www.omg.org/spec/XTCE/20180204'
 ET.register_namespace('', NS)
 MODULES = ['cfe_es', 'cfe_evs', 'cfe_sb', 'cfe_tbl', 'cfe_time', 'to_lab', 'ci_lab']
+# SC-OBC CPUs and the upstream build target with the same message ID blocks
+# (scobc_msgid_bases.h): the RPU uses 0x18xx/0x08xx, the APU 0x19xx/0x09xx.
+CPUS = [('RPU', 'default_cpu1'), ('APU', 'default_cpu2')]
 # Explicit associations where packet type names differ from MID names.
 TELEMETRY = {
     'cfe_es': [('Housekeeping', 'HK_TLM'), ('OneApp', 'APP_TLM'), ('MemStats', 'MEMSTATS_TLM')],
@@ -252,10 +255,10 @@ def generate(manifest, output, module=None):
     ET.ElementTree(root).write(output, encoding='UTF-8', xml_declaration=True)
 
 
-def inspect_cpu(opts, cpu):
+def inspect_cpu(opts, cpu, target):
     source = opts.cfs_root.resolve()
     build = (opts.build_dir or source / 'build-native_std').resolve()
-    flags_file = build / ('native/default_' + cpu.lower() + '/es/CMakeFiles/es.dir/flags.make')
+    flags_file = build / ('native/' + target + '/es/CMakeFiles/es.dir/flags.make')
     flags_text = flags_file.read_text()
     flags = []
     for key in ('C_DEFINES', 'C_INCLUDES', 'C_FLAGS'):
@@ -347,7 +350,7 @@ def inspect_cpu(opts, cpu):
             raise ValueError('Extended message IDs are unsupported')
     revisions = {name: run(['git', '-C', str(source / path), 'rev-parse', 'HEAD']).strip()
                  for name, path in [('cFS', '.'), ('cFE', 'cfe'), ('to_lab', 'apps/to_lab'), ('ci_lab', 'apps/ci_lab')]}
-    manifest = dict(cpu=cpu, profile='native_std/default_' + cpu.lower(), revisions=revisions,
+    manifest = dict(cpu=cpu, profile='native_std/' + target, revisions=revisions,
                     byte_order='leastSignificantByteFirst' if values['BYTE_ORDER'] else 'mostSignificantByteFirst',
                     telemetry=telemetry, commands=commands, layouts=layouts)
     fixtures = []
@@ -365,7 +368,7 @@ def main():
                         help='Common root XML; CPU wrappers and application subdirectories are generated beside it')
     parser.add_argument('--fixtures-output', type=Path, help='Optional independent C packet fixtures for verification')
     opts = parser.parse_args()
-    inspected = [inspect_cpu(opts, cpu) for cpu in ('CPU1', 'CPU2')]
+    inspected = [inspect_cpu(opts, cpu, target) for cpu, target in CPUS]
     opts.output.parent.mkdir(parents=True, exist_ok=True)
     generate(inspected[0][0], opts.output)
     fixtures = []

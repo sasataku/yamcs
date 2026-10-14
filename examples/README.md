@@ -10,7 +10,7 @@ Where `EXAMPLE` is one of the subdirectories in here.
 The following is a short description of each example:
 
 ## racs2-demo
-Upstream cFE ES/EVS/SB/TBL/TIME and CI_LAB/TO_LAB for CPU1 and CPU2 using generated XTCE mission databases.
+Upstream cFE ES/EVS/SB/TBL/TIME and CI_LAB/TO_LAB for the SC-OBC RPU and APU using generated XTCE mission databases.
 The configuration receives UDP telemetry on port 2234 and sends commands to port 1234.
 See [racs2-demo/README.md](racs2-demo/README.md) for the supported build profile and regeneration instructions.
 

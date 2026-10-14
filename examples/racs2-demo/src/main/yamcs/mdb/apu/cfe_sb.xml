@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CFE_SB" shortDescription="Upstream cFS native_std CPU1: CFE_SB">
+<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CFE_SB" shortDescription="Upstream cFS native_std APU: CFE_SB">
   <Header version="1.0" validationStatus="Draft" />
   <TelemetryMetaData>
     <ParameterTypeSet>
@@ -296,7 +296,7 @@
       <Parameter name="CFE_SB_SingleSubscriptionTlm_Payload_Pipe" parameterTypeRef="unsigned32_leastSignificantByteFirst" shortDescription="Payload.Pipe (CFE_SB_PipeId_t)" />
     </ParameterSet>
     <ContainerSet>
-      <SequenceContainer name="CFE_SB_HousekeepingTlm" shortDescription="CFE_SB_HousekeepingTlm_t; MID=0x0803; sizeof=44">
+      <SequenceContainer name="CFE_SB_HousekeepingTlm" shortDescription="CFE_SB_HousekeepingTlm_t; MID=0x0903; sizeof=44">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_SB_HousekeepingTlm_Payload_CommandCounter">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -386,11 +386,11 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x0803" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x0903" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
-      <SequenceContainer name="CFE_SB_StatsTlm" shortDescription="CFE_SB_StatsTlm_t; MID=0x080A; sizeof=460">
+      <SequenceContainer name="CFE_SB_StatsTlm" shortDescription="CFE_SB_StatsTlm_t; MID=0x090A; sizeof=460">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_SB_StatsTlm_Payload_MsgIdsInUse">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -1270,11 +1270,11 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x080A" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x090A" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
-      <SequenceContainer name="CFE_SB_AllSubscriptionsTlm" shortDescription="CFE_SB_AllSubscriptionsTlm_t; MID=0x080D; sizeof=268">
+      <SequenceContainer name="CFE_SB_AllSubscriptionsTlm" shortDescription="CFE_SB_AllSubscriptionsTlm_t; MID=0x090D; sizeof=268">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_SB_AllSubscriptionsTlm_Payload_PktSegment">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -1694,11 +1694,11 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x080D" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x090D" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
-      <SequenceContainer name="CFE_SB_SingleSubscriptionTlm" shortDescription="CFE_SB_SingleSubscriptionTlm_t; MID=0x080E; sizeof=32">
+      <SequenceContainer name="CFE_SB_SingleSubscriptionTlm" shortDescription="CFE_SB_SingleSubscriptionTlm_t; MID=0x090E; sizeof=32">
         <EntryList>
           <ParameterRefEntry parameterRef="CFE_SB_SingleSubscriptionTlm_Payload_SubType">
             <LocationInContainerInBits referenceLocation="containerStart">
@@ -1728,7 +1728,7 @@
         </EntryList>
         <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
           <RestrictionCriteria>
-            <Comparison parameterRef="/cFS/MessageId" value="0x080E" />
+            <Comparison parameterRef="/cFS/MessageId" value="0x090E" />
           </RestrictionCriteria>
         </BaseContainer>
       </SequenceContainer>
@@ -1754,10 +1754,10 @@
       </IntegerArgumentType>
     </ArgumentTypeSet>
     <MetaCommandSet>
-      <MetaCommand name="CFE_SB_SendPrevSubsCmd" shortDescription="CFE_SB_SendPrevSubsCmd_t; MID=0x180E; FC=11; sizeof=8">
+      <MetaCommand name="CFE_SB_SendPrevSubsCmd" shortDescription="CFE_SB_SendPrevSubsCmd_t; MID=0x190E; FC=11; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x180E" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x190E" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="11" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1770,10 +1770,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_EnableSubReportingCmd" shortDescription="CFE_SB_EnableSubReportingCmd_t; MID=0x180E; FC=9; sizeof=8">
+      <MetaCommand name="CFE_SB_EnableSubReportingCmd" shortDescription="CFE_SB_EnableSubReportingCmd_t; MID=0x190E; FC=9; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x180E" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x190E" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="9" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1786,10 +1786,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_DisableSubReportingCmd" shortDescription="CFE_SB_DisableSubReportingCmd_t; MID=0x180E; FC=10; sizeof=8">
+      <MetaCommand name="CFE_SB_DisableSubReportingCmd" shortDescription="CFE_SB_DisableSubReportingCmd_t; MID=0x190E; FC=10; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x180E" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x190E" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="10" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1802,10 +1802,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_NoopCmd" shortDescription="CFE_SB_NoopCmd_t; MID=0x1803; FC=0; sizeof=8">
+      <MetaCommand name="CFE_SB_NoopCmd" shortDescription="CFE_SB_NoopCmd_t; MID=0x1903; FC=0; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1818,10 +1818,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_ResetCountersCmd" shortDescription="CFE_SB_ResetCountersCmd_t; MID=0x1803; FC=1; sizeof=8">
+      <MetaCommand name="CFE_SB_ResetCountersCmd" shortDescription="CFE_SB_ResetCountersCmd_t; MID=0x1903; FC=1; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="1" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1834,10 +1834,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_SendSbStatsCmd" shortDescription="CFE_SB_SendSbStatsCmd_t; MID=0x1803; FC=2; sizeof=8">
+      <MetaCommand name="CFE_SB_SendSbStatsCmd" shortDescription="CFE_SB_SendSbStatsCmd_t; MID=0x1903; FC=2; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="2" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1850,10 +1850,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_WriteRoutingInfoCmd" shortDescription="CFE_SB_WriteRoutingInfoCmd_t; MID=0x1803; FC=3; sizeof=72">
+      <MetaCommand name="CFE_SB_WriteRoutingInfoCmd" shortDescription="CFE_SB_WriteRoutingInfoCmd_t; MID=0x1903; FC=3; sizeof=72">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="65" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="3" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1875,10 +1875,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_EnableRouteCmd" shortDescription="CFE_SB_EnableRouteCmd_t; MID=0x1803; FC=4; sizeof=20">
+      <MetaCommand name="CFE_SB_EnableRouteCmd" shortDescription="CFE_SB_EnableRouteCmd_t; MID=0x1903; FC=4; sizeof=20">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="13" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="4" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1913,10 +1913,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_DisableRouteCmd" shortDescription="CFE_SB_DisableRouteCmd_t; MID=0x1803; FC=5; sizeof=20">
+      <MetaCommand name="CFE_SB_DisableRouteCmd" shortDescription="CFE_SB_DisableRouteCmd_t; MID=0x1903; FC=5; sizeof=20">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="13" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="5" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1951,10 +1951,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_WritePipeInfoCmd" shortDescription="CFE_SB_WritePipeInfoCmd_t; MID=0x1803; FC=7; sizeof=72">
+      <MetaCommand name="CFE_SB_WritePipeInfoCmd" shortDescription="CFE_SB_WritePipeInfoCmd_t; MID=0x1903; FC=7; sizeof=72">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="65" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="7" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -1976,10 +1976,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_WriteMapInfoCmd" shortDescription="CFE_SB_WriteMapInfoCmd_t; MID=0x1803; FC=8; sizeof=72">
+      <MetaCommand name="CFE_SB_WriteMapInfoCmd" shortDescription="CFE_SB_WriteMapInfoCmd_t; MID=0x1903; FC=8; sizeof=72">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x1803" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1903" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="65" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="8" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
@@ -2001,10 +2001,10 @@
           <BaseContainer containerRef="/cFS/CCSDS_Command" />
         </CommandContainer>
       </MetaCommand>
-      <MetaCommand name="CFE_SB_SendHkCmd" shortDescription="CFE_SB_SendHkCmd_t; MID=0x180B; FC=0; sizeof=8">
+      <MetaCommand name="CFE_SB_SendHkCmd" shortDescription="CFE_SB_SendHkCmd_t; MID=0x190B; FC=0; sizeof=8">
         <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
           <ArgumentAssignmentList>
-            <ArgumentAssignment argumentName="mid" argumentValue="0x180B" />
+            <ArgumentAssignment argumentName="mid" argumentValue="0x190B" />
             <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
             <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
             <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />

@@ -27,7 +27,7 @@ public class VerifyCfsMdb {
         var modules = List.of("cfe_es", "cfe_evs", "cfe_sb", "cfe_tbl", "cfe_time", "to_lab", "ci_lab");
         var children = new ArrayList<Map<String, Object>>();
         var directory = Path.of(args[0]).toAbsolutePath().getParent();
-        for (var cpu : List.of("cpu1", "cpu2")) {
+        for (var cpu : List.of("rpu", "apu")) {
             var apps = new ArrayList<Map<String, Object>>();
             for (var module : modules) {
                 apps.add(Map.of("type", "xtce", "args",

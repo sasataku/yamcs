@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CFE_ES" shortDescription="Upstream cFS native_std CPU2: CFE_ES">
+<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="CFE_ES" shortDescription="Upstream cFS native_std APU: CFE_ES">
   <Header version="1.0" validationStatus="Draft" />
   <TelemetryMetaData>
     <ParameterTypeSet>

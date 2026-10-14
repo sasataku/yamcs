@@ -1,8 +1,8 @@
 # racs2-demo — Upstream cFS XTCE MDB
 
 This XTCE 1.2 mission database defines cFE ES/EVS/SB/TBL/TIME and TO_LAB/CI_LAB
-separately for CPU1 and CPU2. Yamcs organizes them under paths such as
-`/cFS/CPU1/CFE_ES` and `/cFS/CPU2/CFE_ES`.
+separately for the SC-OBC RPU and APU. Yamcs organizes them under paths such as
+`/cFS/RPU/CFE_ES` and `/cFS/APU/CFE_ES`.
 
 ## File layout
 
@@ -12,9 +12,9 @@ separately for CPU1 and CPU2. Yamcs organizes them under paths such as
 mdb/
   cfs.xml                  # Common CCSDS primary, telemetry and command headers; cFS root
   cfs.manifest.json        # Source revisions and index of CPU manifests
-  cpu1.xml                 # CPU1 SpaceSystem
-  cpu2.xml                 # CPU2 SpaceSystem
-  cpu1/
+  rpu.xml                  # RPU SpaceSystem
+  apu.xml                  # APU SpaceSystem
+  rpu/
     cfe_es.xml
     cfe_evs.xml
     cfe_sb.xml
@@ -22,8 +22,8 @@ mdb/
     cfe_time.xml
     to_lab.xml
     ci_lab.xml
-    cfs.manifest.json       # CPU1 MIDs, function codes, structures, and offsets
-  cpu2/
+    cfs.manifest.json       # RPU MIDs, function codes, structures, and offsets
+  apu/
     cfe_es.xml
     cfe_evs.xml
     cfe_sb.xml
@@ -31,7 +31,7 @@ mdb/
     cfe_time.xml
     to_lab.xml
     ci_lab.xml
-    cfs.manifest.json       # CPU2 MIDs, function codes, structures, and offsets
+    cfs.manifest.json       # APU MIDs, function codes, structures, and offsets
 ```
 
 Application telemetry containers inherit from `/cFS/CCSDS_Telemetry` and are
@@ -41,7 +41,9 @@ applications you need through `subLoaders`.
 ## Supported configuration and coverage
 
 The database was generated from the upstream cFS builds
-`native_std/default_cpu1` and `native_std/default_cpu2` on Linux.
+`native_std/default_cpu1` and `native_std/default_cpu2` on Linux. Their message
+ID blocks match the SC-OBC mission (`scobc_msgid_bases.h`): `default_cpu1` is
+the RPU (0x18xx/0x08xx) and `default_cpu2` is the APU (0x19xx/0x09xx).
 Both CPU builds use little endian byte order in this configuration.
 
 | Source | Commit |
@@ -73,9 +75,9 @@ TIME diagnostics, and TO data type tests.
 Telecommands include ground commands, housekeeping requests, SB subscription
 report controls, CI ReadUplink, and TIME OneHz/ToneSignal/FakeTone/ToneData.
 
-CPU2 MIDs are obtained from CPU2's build configuration. For example:
+APU MIDs are obtained from the APU's build configuration. For example:
 
-| Message | CPU1 | CPU2 |
+| Message | RPU | APU |
 |---|---|---|
 | ES HK | `0x0800` | `0x0900` |
 | ES ground command | `0x1806` | `0x1906` |
@@ -98,14 +100,14 @@ Telemetry headers are defined as XML fields in two reusable containers:
   PacketLength (16 bits)
     └─ /cFS/CCSDS_Telemetry
          Seconds (32 bits), Subseconds (16 bits), Spare (32 bits)
-           └─ /cFS/CPU1/CFE_ES/CFE_ES_HousekeepingTlm, etc.
+           └─ /cFS/RPU/CFE_ES/CFE_ES_HousekeepingTlm, etc.
 ```
 
 `MessageId` and `Sequence` expose the complete words as well as their individual
 bit fields. The telemetry header inherits the primary header and requires
 `PacketType=0` and `SecondaryHeaderFlag=1`.
 Each application's telemetry container inherits the common telemetry header and
-selects its MID with a hexadecimal comparison. For example, CPU1 ES HK specifies:
+selects its MID with a hexadecimal comparison. For example, RPU ES HK specifies:
 
 ```xml
 <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
@@ -126,7 +128,7 @@ and `checksum` (8 bits). The 16-bit `mid` contains the CCSDS version, packet typ
 secondary-header flag, and APID, following cFE's MID representation.
 
 Each application command inherits this header and assigns its values explicitly.
-For example, CPU1 ES NOOP specifies:
+For example, RPU ES NOOP specifies:
 
 ```xml
 <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
@@ -165,11 +167,11 @@ use hexadecimal MIDs, such as `<Comparison parameterRef="/cFS/MessageId" value="
 Example paths:
 
 ```text
-/cFS/CPU1/CFE_ES/CFE_ES_NoopCmd
-/cFS/CPU2/CFE_ES/CFE_ES_NoopCmd
-/cFS/CPU1/TO_LAB/TO_LAB_EnableOutputCmd
-/cFS/CPU2/TO_LAB/TO_LAB_EnableOutputCmd
-/cFS/CPU1/TO_LAB/TO_LAB_HkTlm_Payload_CommandCounter
+/cFS/RPU/CFE_ES/CFE_ES_NoopCmd
+/cFS/APU/CFE_ES/CFE_ES_NoopCmd
+/cFS/RPU/TO_LAB/TO_LAB_EnableOutputCmd
+/cFS/APU/TO_LAB/TO_LAB_EnableOutputCmd
+/cFS/RPU/TO_LAB/TO_LAB_HkTlm_Payload_CommandCounter
 ```
 
 The CPU namespace adds a level to the previous `/cFS/CFE_ES/...` layout.
@@ -189,18 +191,18 @@ mdb:
     subLoaders:
       - type: xtce
         args:
-          file: mdb/cpu1.xml
+          file: mdb/rpu.xml
         subLoaders:
           - type: xtce
             args:
-              file: mdb/cpu1/cfe_es.xml
+              file: mdb/rpu/cfe_es.xml
       - type: xtce
         args:
-          file: mdb/cpu2.xml
+          file: mdb/apu.xml
         subLoaders:
           - type: xtce
             args:
-              file: mdb/cpu2/cfe_es.xml
+              file: mdb/apu/cfe_es.xml
 
 streamConfig:
   tm:
@@ -210,10 +212,10 @@ streamConfig:
 ```
 
 The same telemetry stream can distinguish both CPUs by MID.
-Commands for both CPUs are sent to CPU1's CI link at `127.0.0.1:1234`.
-CPU1 forwards commands carrying CPU2 MIDs through SBN to CPU2.
-The command stream specifies `tcPatterns: ["/cFS/CPU1/.*", "/cFS/CPU2/.*"]`.
-CPU2 telemetry also reaches CPU1 through SBN and is sent to Yamcs by CPU1's TO.
+Commands for both CPUs are sent to the RPU's CI link at `127.0.0.1:1235`.
+The RPU forwards commands carrying APU MIDs through SBN to the APU.
+The command stream specifies `tcPatterns: ["/cFS/RPU/.*", "/cFS/APU/.*"]`.
+APU telemetry also reaches the RPU through SBN and is sent to Yamcs by the RPU's TO.
 
 `CfsCommandPostprocessor` updates the packet length, sequence count, and checksum
 immediately before transmission. Configure SBN subscriptions and forwarding,
@@ -237,9 +239,12 @@ Open `http://localhost:8090` and select `racs2-demo/realtime`.
 To stop Yamcs started in your terminal, press Ctrl+C in that terminal.
 Start cFS separately; this example does not launch cFS processes automatically.
 
-Yamcs receives telemetry from CPU1's TO on UDP port 2234 and sends commands for
-both CPUs to CPU1 at `127.0.0.1:1234`. Data is stored in `data/` under the runtime directory.
-To enable CPU1's TO output, issue `/cFS/CPU1/TO_LAB/TO_LAB_EnableOutputCmd`
+Yamcs receives telemetry from the RPU's TO on UDP port 2235 and sends commands for
+both CPUs to the RPU at `127.0.0.1:1235`. Data is stored in `data/` under the runtime directory.
+ci_lab and to_lab offset their ports by the processor ID minus one, and the RPU is
+processor 2 (`rpu_PROCESSORID` in the SC-OBC `targets.cmake`). The APU is processor 1,
+so its development link uses 1234 and 2234.
+To enable the RPU's TO output, issue `/cFS/RPU/TO_LAB/TO_LAB_EnableOutputCmd`
 with `Payload_dest_IP=127.0.0.1`.
 Add any missing telemetry subscriptions through AddPacket or TO's table configuration.
 
@@ -266,7 +271,7 @@ Use `--build-dir` to select the cFS build directory and
 `--output /path/to/mdb/cfs.xml` to select the output location.
 The generator writes the common XML, CPU wrapper XML files, and application XML
 files and manifests for each CPU together.
-It supports `native/default_cpu1` and `native/default_cpu2`.
+It reads `native/default_cpu1` as the RPU and `native/default_cpu2` as the APU.
 EDS, other header formats, cross builds, and other ABIs require generator changes.
 
 Schema validation requires Python's `lxml` package.

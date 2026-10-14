@@ -1,5 +1,5 @@
 {
-  "cpu": "CPU1",
+  "cpu": "RPU",
   "profile": "native_std/default_cpu1",
   "revisions": {
     "cFS": "83c403ed8ec273c6de4fe8ca08ade8d7753d80ac",
