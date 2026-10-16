@@ -224,6 +224,47 @@ APU telemetry also reaches the RPU through SBN and is sent to Yamcs by the RPU's
 immediately before transmission. Configure SBN subscriptions and forwarding,
 and TO's output subscriptions, on the cFS side.
 
+## Displaying cFE EVS events
+
+Yamcs includes the standard `org.yamcs.tctm.cfs.CfsEventDecoder` service, which
+converts cFE long EVS packets to events. No example-specific Java service is needed.
+The instance configuration enables it alongside `EventRecorder`:
+
+```yaml
+services:
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.tctm.cfs.CfsEventDecoder
+    args:
+      msgIds: [0x0808, 0x0908]
+      headerLength: 16
+      byteOrder: LITTLE_ENDIAN
+      charset: US-ASCII
+      appNameMax: 20
+      eventMsgMax: 122
+      streams: [tm_realtime]
+```
+
+Keep the other configured instance services as well. The selected MIDs are the
+RPU and APU long event packets. The native MDB payloads use little endian byte
+order; change this option if the deployed cFS uses a different byte order.
+The primary CCSDS header remains big endian.
+
+This branch adds a `headerLength` option to the standard decoder: its original
+12-byte default is retained, while this cFE configuration requires 16 bytes
+because of four spare bytes after the timestamp. Build Yamcs from this branch
+to use the option; an older binary with the fixed 12-byte offset cannot decode
+these 16-byte-header packets correctly.
+
+Open **Events** for `racs2-demo` after restarting with the updated binary and
+configuration. The standard decoder uses source `/CFS/CPU<ProcessorID>/<AppName>`,
+such as `/CFS/CPU2/CFE_ES`, and type `EVID<EventID>`. Event text and telemetry
+reception/generation timestamps are retained. cFE types 3 and 4 map to ERROR
+and CRITICAL (the Events API presents legacy ERROR as SEVERE); other types map to INFO. `EventRecorder` saves the events for later
+retrieval. TO/SBN must forward the selected EVS MIDs to the TM stream.
+
+Short event MIDs `0x0809` and `0x0909` remain available as raw telemetry and MDB
+parameters; they are not included in this long-event decoder configuration.
+
 ## Building and starting Yamcs
 
 For the initial build, run these commands from the repository root:

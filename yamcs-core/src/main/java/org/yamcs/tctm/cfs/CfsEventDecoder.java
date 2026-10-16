@@ -55,6 +55,7 @@ public class CfsEventDecoder extends AbstractYamcsService implements StreamSubsc
     Charset charset;
     Integer appNameMax;
     Integer eventMsgMax;
+    int headerLength = 12;
 
     @Override
     public Spec getSpec() {
@@ -65,6 +66,7 @@ public class CfsEventDecoder extends AbstractYamcsService implements StreamSubsc
         spec.addOption("charset", OptionType.STRING);
         spec.addOption("appNameMax", OptionType.INTEGER).withDefault(20);
         spec.addOption("eventMsgMax", OptionType.INTEGER).withDefault(122);
+        spec.addOption("headerLength", OptionType.INTEGER).withDefault(12);
 
         return spec;
     }
@@ -75,6 +77,10 @@ public class CfsEventDecoder extends AbstractYamcsService implements StreamSubsc
 
         appNameMax = config.getInt("appNameMax");
         eventMsgMax = config.getInt("eventMsgMax");
+        headerLength = config.getInt("headerLength", 12);
+        if (headerLength < 6) {
+            throw new ConfigurationException("headerLength must be at least 6 bytes");
+        }
 
         if (config.containsKey("streams")) {
             streamNames = config.getList("streams");
@@ -145,7 +151,7 @@ public class CfsEventDecoder extends AbstractYamcsService implements StreamSubsc
     private void processPacket(long rectime, long gentime, byte[] packet) {
         ByteBuffer buf = ByteBuffer.wrap(packet);
         buf.order(byteOrder);
-        buf.position(12);
+        buf.position(headerLength);
         String app = decodeString(buf, appNameMax);
         int eventId = buf.getShort();
         int eventType = buf.getShort();

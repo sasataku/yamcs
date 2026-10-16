@@ -2,6 +2,15 @@ services:
   - class: org.yamcs.archive.XtceTmRecorder
   - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.tctm.cfs.CfsEventDecoder
+    args:
+      msgIds: [0x0808, 0x0908]
+      headerLength: 16
+      byteOrder: LITTLE_ENDIAN
+      charset: US-ASCII
+      appNameMax: 20
+      eventMsgMax: 122
+      streams: [tm_realtime]
   - class: org.yamcs.archive.CommandHistoryRecorder
   - class: org.yamcs.archive.ReplayServer
   - class: org.yamcs.ProcessorCreatorService

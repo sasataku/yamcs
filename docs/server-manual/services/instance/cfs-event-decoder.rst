@@ -35,6 +35,7 @@ This service is defined in :file:`etc/yamcs.{instance}.yaml`. Example:
           charset: US-ASCII
           appNameMax: 20
           eventMsgMax: 122
+          headerLength: 12
           streams:
             - tm_realtime
 
@@ -56,6 +57,12 @@ appNameMax (integer):
 
 eventMsgMax (integer):
     The size of the event message string in bytes. Default: ``122``
+
+headerLength (integer):
+    The total telemetry header length in bytes, including the primary and secondary
+    headers and any padding before the event payload. Default: ``12``.
+    Set this to ``16`` for cFE headers with four spare bytes after the timestamp.
+    The minimum value is ``6``.
 
 streams ([string]):
     The streams to process for events. Not required. If no stream is provided, all telemetry streams of type ``tm`` are used (these are configured in the instance configuration file under the ``streamConfig`` section).
