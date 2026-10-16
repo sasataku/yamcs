@@ -48,6 +48,9 @@ mdb:
           - type: xtce
             args:
               file: mdb/rpu/ci_lab.xml
+          - type: xtce
+            args:
+              file: mdb/rpu/sample_app.xml
       - type: xtce
         args:
           file: mdb/apu.xml
@@ -73,6 +76,9 @@ mdb:
           - type: xtce
             args:
               file: mdb/apu/ci_lab.xml
+          - type: xtce
+            args:
+              file: mdb/apu/sample_app.xml
 
 dataLinks:
   - name: to_lab_tm

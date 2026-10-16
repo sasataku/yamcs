@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 
 NS = 'http://www.omg.org/spec/XTCE/20180204'
 ET.register_namespace('', NS)
-MODULES = ['cfe_es', 'cfe_evs', 'cfe_sb', 'cfe_tbl', 'cfe_time', 'to_lab', 'ci_lab']
+MODULES = ['cfe_es', 'cfe_evs', 'cfe_sb', 'cfe_tbl', 'cfe_time', 'to_lab', 'ci_lab', 'sample_app']
 # SC-OBC CPUs and the upstream build target with the same message ID blocks
 # (scobc_msgid_bases.h): the RPU uses 0x18xx/0x08xx, the APU 0x19xx/0x09xx.
 CPUS = [('RPU', 'default_cpu1'), ('APU', 'default_cpu2')]
@@ -30,6 +30,7 @@ TELEMETRY = {
     'cfe_time': [('Housekeeping', 'HK_TLM'), ('Diagnostic', 'DIAG_TLM')],
     'to_lab': [('Hk', 'HK_TLM'), ('DataTypes', 'DATA_TYPES')],
     'ci_lab': [('Hk', 'HK_TLM')],
+    'sample_app': [('Hk', 'HK_TLM')],
 }
 
 
@@ -263,7 +264,7 @@ def inspect_cpu(opts, cpu, target):
     flags = []
     for key in ('C_DEFINES', 'C_INCLUDES', 'C_FLAGS'):
         flags.extend(shlex.split(re.search(r'^' + key + r' = (.*)$', flags_text, re.M).group(1)))
-    for app in ('to_lab', 'ci_lab'):
+    for app in ('to_lab', 'ci_lab', 'sample_app'):
         flags.append('-I' + str(source / 'apps' / app / 'fsw/inc'))
     include = '\n'.join('#include "%s_%s.h"' % (module, suffix)
                         for module in MODULES for suffix in ('msg', 'msgids'))
@@ -349,7 +350,8 @@ def inspect_cpu(opts, cpu, target):
         if not 0 <= packet['mid'] <= 65535:
             raise ValueError('Extended message IDs are unsupported')
     revisions = {name: run(['git', '-C', str(source / path), 'rev-parse', 'HEAD']).strip()
-                 for name, path in [('cFS', '.'), ('cFE', 'cfe'), ('to_lab', 'apps/to_lab'), ('ci_lab', 'apps/ci_lab')]}
+                 for name, path in [('cFS', '.'), ('cFE', 'cfe'), ('to_lab', 'apps/to_lab'), ('ci_lab', 'apps/ci_lab'),
+                                    ('sample_app', 'apps/sample_app')]}
     manifest = dict(cpu=cpu, profile='native_std/' + target, revisions=revisions,
                     byte_order='leastSignificantByteFirst' if values['BYTE_ORDER'] else 'mostSignificantByteFirst',
                     telemetry=telemetry, commands=commands, layouts=layouts)

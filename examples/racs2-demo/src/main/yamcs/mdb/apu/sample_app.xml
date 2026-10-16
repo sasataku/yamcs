@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" name="SAMPLE_APP" shortDescription="Upstream cFS native_std APU: SAMPLE_APP">
+  <Header version="1.0" validationStatus="Draft" />
+  <TelemetryMetaData>
+    <ParameterTypeSet>
+      <IntegerParameterType name="unsigned8_leastSignificantByteFirst" signed="false" sizeInBits="8">
+        <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned" />
+      </IntegerParameterType>
+    </ParameterTypeSet>
+    <ParameterSet>
+      <Parameter name="SAMPLE_APP_HkTlm_Payload_CommandCounter" parameterTypeRef="unsigned8_leastSignificantByteFirst" shortDescription="Payload.CommandCounter (uint8)" />
+      <Parameter name="SAMPLE_APP_HkTlm_Payload_CommandErrorCounter" parameterTypeRef="unsigned8_leastSignificantByteFirst" shortDescription="Payload.CommandErrorCounter (uint8)" />
+    </ParameterSet>
+    <ContainerSet>
+      <SequenceContainer name="SAMPLE_APP_HkTlm" shortDescription="SAMPLE_APP_HkTlm_t; MID=0x0983; sizeof=18">
+        <EntryList>
+          <ParameterRefEntry parameterRef="SAMPLE_APP_HkTlm_Payload_CommandCounter">
+            <LocationInContainerInBits referenceLocation="containerStart">
+              <FixedValue>128</FixedValue>
+            </LocationInContainerInBits>
+          </ParameterRefEntry>
+          <ParameterRefEntry parameterRef="SAMPLE_APP_HkTlm_Payload_CommandErrorCounter">
+            <LocationInContainerInBits referenceLocation="containerStart">
+              <FixedValue>136</FixedValue>
+            </LocationInContainerInBits>
+          </ParameterRefEntry>
+        </EntryList>
+        <BaseContainer containerRef="/cFS/CCSDS_Telemetry">
+          <RestrictionCriteria>
+            <Comparison parameterRef="/cFS/MessageId" value="0x0983" />
+          </RestrictionCriteria>
+        </BaseContainer>
+      </SequenceContainer>
+    </ContainerSet>
+  </TelemetryMetaData>
+  <CommandMetaData>
+    <ArgumentTypeSet>
+      <IntegerArgumentType name="unsigned32_leastSignificantByteFirst" signed="false" sizeInBits="32">
+        <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned" />
+      </IntegerArgumentType>
+      <IntegerArgumentType name="signed16_leastSignificantByteFirst" signed="true" sizeInBits="16">
+        <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement" />
+      </IntegerArgumentType>
+      <StringArgumentType name="string80_leastSignificantByteFirst">
+        <StringDataEncoding encoding="UTF-8">
+          <SizeInBits>
+            <Fixed>
+              <FixedValue>80</FixedValue>
+            </Fixed>
+            <TerminationChar>00</TerminationChar>
+          </SizeInBits>
+        </StringDataEncoding>
+      </StringArgumentType>
+    </ArgumentTypeSet>
+    <MetaCommandSet>
+      <MetaCommand name="SAMPLE_APP_NoopCmd" shortDescription="SAMPLE_APP_NoopCmd_t; MID=0x1982; FC=0; sizeof=8">
+        <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
+          <ArgumentAssignmentList>
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1982" />
+            <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
+            <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
+            <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
+            <ArgumentAssignment argumentName="sequenceCount" argumentValue="0" />
+            <ArgumentAssignment argumentName="checksum" argumentValue="0" />
+          </ArgumentAssignmentList>
+        </BaseMetaCommand>
+        <CommandContainer name="SAMPLE_APP_NoopCmd">
+          <EntryList />
+          <BaseContainer containerRef="/cFS/CCSDS_Command" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="SAMPLE_APP_ResetCountersCmd" shortDescription="SAMPLE_APP_ResetCountersCmd_t; MID=0x1982; FC=1; sizeof=8">
+        <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
+          <ArgumentAssignmentList>
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1982" />
+            <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
+            <ArgumentAssignment argumentName="functionCode" argumentValue="1" />
+            <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
+            <ArgumentAssignment argumentName="sequenceCount" argumentValue="0" />
+            <ArgumentAssignment argumentName="checksum" argumentValue="0" />
+          </ArgumentAssignmentList>
+        </BaseMetaCommand>
+        <CommandContainer name="SAMPLE_APP_ResetCountersCmd">
+          <EntryList />
+          <BaseContainer containerRef="/cFS/CCSDS_Command" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="SAMPLE_APP_ProcessCmd" shortDescription="SAMPLE_APP_ProcessCmd_t; MID=0x1982; FC=2; sizeof=8">
+        <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
+          <ArgumentAssignmentList>
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1982" />
+            <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
+            <ArgumentAssignment argumentName="functionCode" argumentValue="2" />
+            <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
+            <ArgumentAssignment argumentName="sequenceCount" argumentValue="0" />
+            <ArgumentAssignment argumentName="checksum" argumentValue="0" />
+          </ArgumentAssignmentList>
+        </BaseMetaCommand>
+        <CommandContainer name="SAMPLE_APP_ProcessCmd">
+          <EntryList />
+          <BaseContainer containerRef="/cFS/CCSDS_Command" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="SAMPLE_APP_DisplayParamCmd" shortDescription="SAMPLE_APP_DisplayParamCmd_t; MID=0x1982; FC=3; sizeof=24">
+        <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
+          <ArgumentAssignmentList>
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1982" />
+            <ArgumentAssignment argumentName="packetLength" argumentValue="17" />
+            <ArgumentAssignment argumentName="functionCode" argumentValue="3" />
+            <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
+            <ArgumentAssignment argumentName="sequenceCount" argumentValue="0" />
+            <ArgumentAssignment argumentName="checksum" argumentValue="0" />
+          </ArgumentAssignmentList>
+        </BaseMetaCommand>
+        <ArgumentList>
+          <Argument name="Payload_ValU32" argumentTypeRef="unsigned32_leastSignificantByteFirst" />
+          <Argument name="Payload_ValI16" argumentTypeRef="signed16_leastSignificantByteFirst" />
+          <Argument name="Payload_ValStr" argumentTypeRef="string80_leastSignificantByteFirst" />
+        </ArgumentList>
+        <CommandContainer name="SAMPLE_APP_DisplayParamCmd">
+          <EntryList>
+            <ArgumentRefEntry argumentRef="Payload_ValU32">
+              <LocationInContainerInBits referenceLocation="containerStart">
+                <FixedValue>64</FixedValue>
+              </LocationInContainerInBits>
+            </ArgumentRefEntry>
+            <ArgumentRefEntry argumentRef="Payload_ValI16">
+              <LocationInContainerInBits referenceLocation="containerStart">
+                <FixedValue>96</FixedValue>
+              </LocationInContainerInBits>
+            </ArgumentRefEntry>
+            <ArgumentRefEntry argumentRef="Payload_ValStr">
+              <LocationInContainerInBits referenceLocation="containerStart">
+                <FixedValue>112</FixedValue>
+              </LocationInContainerInBits>
+            </ArgumentRefEntry>
+          </EntryList>
+          <BaseContainer containerRef="/cFS/CCSDS_Command" />
+        </CommandContainer>
+      </MetaCommand>
+      <MetaCommand name="SAMPLE_APP_SendHkCmd" shortDescription="SAMPLE_APP_SendHkCmd_t; MID=0x1983; FC=0; sizeof=8">
+        <BaseMetaCommand metaCommandRef="/cFS/CCSDS_Command">
+          <ArgumentAssignmentList>
+            <ArgumentAssignment argumentName="mid" argumentValue="0x1983" />
+            <ArgumentAssignment argumentName="packetLength" argumentValue="1" />
+            <ArgumentAssignment argumentName="functionCode" argumentValue="0" />
+            <ArgumentAssignment argumentName="sequenceFlags" argumentValue="3" />
+            <ArgumentAssignment argumentName="sequenceCount" argumentValue="0" />
+            <ArgumentAssignment argumentName="checksum" argumentValue="0" />
+          </ArgumentAssignmentList>
+        </BaseMetaCommand>
+        <CommandContainer name="SAMPLE_APP_SendHkCmd">
+          <EntryList />
+          <BaseContainer containerRef="/cFS/CCSDS_Command" />
+        </CommandContainer>
+      </MetaCommand>
+    </MetaCommandSet>
+  </CommandMetaData>
+</SpaceSystem>

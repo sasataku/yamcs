@@ -2,10 +2,11 @@
   "cpu": "RPU",
   "profile": "native_std/default_cpu1",
   "revisions": {
-    "cFS": "83c403ed8ec273c6de4fe8ca08ade8d7753d80ac",
+    "cFS": "7385d77931f1b46f8c5565990474a4d6214fbdf4",
     "cFE": "5dd74afa85e5ed5e8c1ed4129281d21611f8d699",
     "to_lab": "d27c6014cb5d2979140500f635876ee87b81995b",
-    "ci_lab": "edb8ddf53076128a125b373b3b870f75e1d82d04"
+    "ci_lab": "edb8ddf53076128a125b373b3b870f75e1d82d04",
+    "sample_app": "199476a34827ae84d50d66f97619227854cd971a"
   },
   "byte_order": "leastSignificantByteFirst",
   "telemetry": [
@@ -110,6 +111,12 @@
       "c_type": "CI_LAB_HkTlm_t",
       "mid_macro": "CI_LAB_HK_TLM_MID",
       "mid": 2180
+    },
+    {
+      "name": "SAMPLE_APP_HkTlm",
+      "c_type": "SAMPLE_APP_HkTlm_t",
+      "mid_macro": "SAMPLE_APP_HK_TLM_MID",
+      "mid": 2179
     }
   ],
   "commands": [
@@ -895,6 +902,46 @@
       "mid_macro": "CI_LAB_SEND_HK_MID",
       "code_macro": null,
       "mid": 6277,
+      "code": 0
+    },
+    {
+      "name": "SAMPLE_APP_NoopCmd",
+      "c_type": "SAMPLE_APP_NoopCmd_t",
+      "mid_macro": "SAMPLE_APP_CMD_MID",
+      "code_macro": "SAMPLE_APP_NOOP_CC",
+      "mid": 6274,
+      "code": 0
+    },
+    {
+      "name": "SAMPLE_APP_ResetCountersCmd",
+      "c_type": "SAMPLE_APP_ResetCountersCmd_t",
+      "mid_macro": "SAMPLE_APP_CMD_MID",
+      "code_macro": "SAMPLE_APP_RESET_COUNTERS_CC",
+      "mid": 6274,
+      "code": 1
+    },
+    {
+      "name": "SAMPLE_APP_ProcessCmd",
+      "c_type": "SAMPLE_APP_ProcessCmd_t",
+      "mid_macro": "SAMPLE_APP_CMD_MID",
+      "code_macro": "SAMPLE_APP_PROCESS_CC",
+      "mid": 6274,
+      "code": 2
+    },
+    {
+      "name": "SAMPLE_APP_DisplayParamCmd",
+      "c_type": "SAMPLE_APP_DisplayParamCmd_t",
+      "mid_macro": "SAMPLE_APP_CMD_MID",
+      "code_macro": "SAMPLE_APP_DISPLAY_PARAM_CC",
+      "mid": 6274,
+      "code": 3
+    },
+    {
+      "name": "SAMPLE_APP_SendHkCmd",
+      "c_type": "SAMPLE_APP_SendHkCmd_t",
+      "mid_macro": "SAMPLE_APP_SEND_HK_MID",
+      "code_macro": null,
+      "mid": 6275,
       "code": 0
     },
     {
@@ -15720,6 +15767,523 @@
       ]
     },
     "CI_LAB_SendHkCmd_t": {
+      "size": 8,
+      "fields": [
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[0]",
+          "offset": 0,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[1]",
+          "offset": 1,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[0]",
+          "offset": 2,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[1]",
+          "offset": 3,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[0]",
+          "offset": 4,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[1]",
+          "offset": 5,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.FunctionCode",
+          "offset": 6,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.Checksum",
+          "offset": 7,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        }
+      ]
+    },
+    "SAMPLE_APP_DisplayParamCmd_t": {
+      "size": 24,
+      "fields": [
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[0]",
+          "offset": 0,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[1]",
+          "offset": 1,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[0]",
+          "offset": 2,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[1]",
+          "offset": 3,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[0]",
+          "offset": 4,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[1]",
+          "offset": 5,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.FunctionCode",
+          "offset": 6,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.Checksum",
+          "offset": 7,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "Payload.ValU32",
+          "offset": 8,
+          "size": 4,
+          "kind": "unsigned",
+          "c_type": "uint32",
+          "boolean": false
+        },
+        {
+          "path": "Payload.ValI16",
+          "offset": 12,
+          "size": 2,
+          "kind": "signed",
+          "c_type": "int16",
+          "boolean": false
+        },
+        {
+          "path": "Payload.ValStr",
+          "offset": 14,
+          "size": 10,
+          "kind": "string",
+          "c_type": "char [10]"
+        }
+      ]
+    },
+    "SAMPLE_APP_HkTlm_t": {
+      "size": 18,
+      "fields": [
+        {
+          "path": "TelemetryHeader.Msg.CCSDS.Pri.StreamId[0]",
+          "offset": 0,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Msg.CCSDS.Pri.StreamId[1]",
+          "offset": 1,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Msg.CCSDS.Pri.Sequence[0]",
+          "offset": 2,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Msg.CCSDS.Pri.Sequence[1]",
+          "offset": 3,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Msg.CCSDS.Pri.Length[0]",
+          "offset": 4,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Msg.CCSDS.Pri.Length[1]",
+          "offset": 5,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Sec.Time[0]",
+          "offset": 6,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Sec.Time[1]",
+          "offset": 7,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Sec.Time[2]",
+          "offset": 8,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Sec.Time[3]",
+          "offset": 9,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Sec.Time[4]",
+          "offset": 10,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Sec.Time[5]",
+          "offset": 11,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Spare[0]",
+          "offset": 12,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Spare[1]",
+          "offset": 13,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Spare[2]",
+          "offset": 14,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "TelemetryHeader.Spare[3]",
+          "offset": 15,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "Payload.CommandCounter",
+          "offset": 16,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "Payload.CommandErrorCounter",
+          "offset": 17,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        }
+      ]
+    },
+    "SAMPLE_APP_NoopCmd_t": {
+      "size": 8,
+      "fields": [
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[0]",
+          "offset": 0,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[1]",
+          "offset": 1,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[0]",
+          "offset": 2,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[1]",
+          "offset": 3,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[0]",
+          "offset": 4,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[1]",
+          "offset": 5,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.FunctionCode",
+          "offset": 6,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.Checksum",
+          "offset": 7,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        }
+      ]
+    },
+    "SAMPLE_APP_ProcessCmd_t": {
+      "size": 8,
+      "fields": [
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[0]",
+          "offset": 0,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[1]",
+          "offset": 1,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[0]",
+          "offset": 2,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[1]",
+          "offset": 3,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[0]",
+          "offset": 4,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[1]",
+          "offset": 5,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.FunctionCode",
+          "offset": 6,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.Checksum",
+          "offset": 7,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        }
+      ]
+    },
+    "SAMPLE_APP_ResetCountersCmd_t": {
+      "size": 8,
+      "fields": [
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[0]",
+          "offset": 0,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.StreamId[1]",
+          "offset": 1,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[0]",
+          "offset": 2,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Sequence[1]",
+          "offset": 3,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[0]",
+          "offset": 4,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Msg.CCSDS.Pri.Length[1]",
+          "offset": 5,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.FunctionCode",
+          "offset": 6,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        },
+        {
+          "path": "CommandHeader.Sec.Checksum",
+          "offset": 7,
+          "size": 1,
+          "kind": "unsigned",
+          "c_type": "uint8",
+          "boolean": false
+        }
+      ]
+    },
+    "SAMPLE_APP_SendHkCmd_t": {
       "size": 8,
       "fields": [
         {

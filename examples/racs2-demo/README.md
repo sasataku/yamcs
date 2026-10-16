@@ -1,6 +1,6 @@
 # racs2-demo — Upstream cFS XTCE MDB
 
-This XTCE 1.2 mission database defines cFE ES/EVS/SB/TBL/TIME and TO_LAB/CI_LAB
+This XTCE 1.2 mission database defines cFE ES/EVS/SB/TBL/TIME and TO_LAB/CI_LAB/SAMPLE_APP
 separately for the SC-OBC RPU and APU. Yamcs organizes them under paths such as
 `/cFS/RPU/CFE_ES` and `/cFS/APU/CFE_ES`.
 
@@ -22,6 +22,7 @@ mdb/
     cfe_time.xml
     to_lab.xml
     ci_lab.xml
+    sample_app.xml
     cfs.manifest.json       # RPU MIDs, function codes, structures, and offsets
   apu/
     cfe_es.xml
@@ -31,6 +32,7 @@ mdb/
     cfe_time.xml
     to_lab.xml
     ci_lab.xml
+    sample_app.xml
     cfs.manifest.json       # APU MIDs, function codes, structures, and offsets
 ```
 
@@ -48,10 +50,11 @@ Both CPU builds use little endian byte order in this configuration.
 
 | Source | Commit |
 |---|---|
-| cFS | `83c403ed8ec273c6de4fe8ca08ade8d7753d80ac` |
+| cFS | `7385d77931f1b46f8c5565990474a4d6214fbdf4` |
 | cFE | `5dd74afa85e5ed5e8c1ed4129281d21611f8d699` |
 | to_lab | `d27c6014cb5d2979140500f635876ee87b81995b` |
 | ci_lab | `edb8ddf53076128a125b373b3b870f75e1d82d04` |
+| sample_app | `199476a34827ae84d50d66f97619227854cd971a` |
 
 The following telemetry (TM) and telecommands (TC) are defined for **each CPU**.
 
@@ -64,11 +67,12 @@ The following telemetry (TM) and telecommands (TC) are defined for **each CPU**.
 | TIME | 2 | 21 |
 | TO_LAB | 2 | 8 |
 | CI_LAB | 1 | 4 |
-| Total per CPU | **17** | **103** |
-| Total for both CPUs | **34** | **206** |
+| SAMPLE_APP | 1 | 5 |
+| Total per CPU | **18** | **108** |
+| Total for both CPUs | **36** | **216** |
 
-The MDB defines 1356 parameters and 36 telemetry containers, including the common headers.
-It also includes one abstract command, `/cFS/CCSDS_Command`, shared by the 206 concrete commands.
+The MDB defines 1360 parameters and 38 telemetry containers, including the common headers.
+It also includes one abstract command, `/cFS/CCSDS_Command`, shared by the 216 concrete commands.
 Telemetry includes housekeeping, ES application information and memory statistics,
 EVS long and short events, SB statistics and subscriptions, the TBL registry,
 TIME diagnostics, and TO data type tests.
@@ -81,6 +85,18 @@ APU MIDs are obtained from the APU's build configuration. For example:
 |---|---|---|
 | ES HK | `0x0800` | `0x0900` |
 | ES ground command | `0x1806` | `0x1906` |
+
+SAMPLE_APP housekeeping uses RPU MID `0x0883` and APU MID `0x0983`, from
+upstream's telemetry topic offset 131 (`0x83`) and the CPU-specific MID base.
+The containers are `/cFS/RPU/SAMPLE_APP/SAMPLE_APP_HkTlm` and
+`/cFS/APU/SAMPLE_APP/SAMPLE_APP_HkTlm`. Each packet is 18 bytes: the common
+16-byte header followed by unsigned 8-bit `Payload.CommandCounter` and
+`Payload.CommandErrorCounter` at byte offsets 16 and 17. The standalone
+`rpu/sample_app.xml` and `apu/sample_app.xml` files also define Noop,
+ResetCounters, Process, DisplayParam, and SendHk commands.
+These definitions follow [upstream sample_app message structures](https://github.com/nasa/sample_app/blob/199476a34827ae84d50d66f97619227854cd971a/config/default_sample_app_msgstruct.h)
+and the associated payload definitions. Mission-specific MID or structure
+overrides require regenerating against that mission's build.
 
 TIME global commands use MIDs shared by both CPUs. Selecting a CPU namespace
 for these commands does not change their global MID.
