@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.JsonParser;
+import org.yaml.snakeyaml.Yaml;
+import org.yamcs.archive.XtceTmRecorder;
 import org.yamcs.ProcessorConfig;
 import org.yamcs.YConfiguration;
 import org.yamcs.mdb.MdbFactory;
@@ -19,8 +21,8 @@ import org.yamcs.utils.TimeEncoding;
 /** Compare XTCE command encoding and telemetry decoding to real upstream C structs. */
 public class VerifyCfsMdb {
     public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            throw new IllegalArgumentException("Usage: VerifyCfsMdb MDB_XML C_FIXTURES_JSON");
+        if (args.length < 2 || args.length > 3) {
+            throw new IllegalArgumentException("Usage: VerifyCfsMdb MDB_XML C_FIXTURES_JSON [INSTANCE_YAML]");
         }
         TimeEncoding.setUp();
         YConfiguration.setupTest(null);
@@ -39,9 +41,25 @@ public class VerifyCfsMdb {
         var config = YConfiguration.wrap(Map.of("type", "xtce", "args", Map.of("file", args[0]),
                 "subLoaders", children));
         var mdb = MdbFactory.createInstance(List.of(config), false, false);
+        var instanceFile = args.length == 3 ? Path.of(args[2])
+                : directory.getParent().resolve("etc/yamcs.racs2-demo.yaml");
+        Map<String, Object> instanceMap = new Yaml().load(Files.readString(instanceFile));
+        var instanceConfig = YConfiguration.wrap(instanceMap);
+        var stream = instanceConfig.getConfig("streamConfig").getConfigList("tm").get(0);
+        var rootName = stream.getString("rootContainer");
+        var startContainer = mdb.getSequenceContainer(rootName);
+        if (startContainer == null) {
+            throw new AssertionError("Unknown stream root container " + rootName);
+        }
         var processor = new MetaCommandProcessor(new ProcessorData("verify-cfs", mdb, new ProcessorConfig()));
         var extractor = new XtceTmExtractor(mdb);
         extractor.provideAll();
+        var recorderExtractor = new XtceTmExtractor(mdb);
+        for (var container : mdb.getSequenceContainers()) {
+            if (container.useAsArchivePartition()) {
+                recorderExtractor.startProviding(container);
+            }
+        }
         int commands = 0;
         int telemetry = 0;
         var fixtures = JsonParser.parseString(Files.readString(Path.of(args[1]))).getAsJsonArray();
@@ -66,11 +84,22 @@ public class VerifyCfsMdb {
                 }
                 commands++;
             } else {
-                var result = extractor.processPacket(expected, 0, 0, 0);
+                var result = extractor.processPacket(expected, 0, 0, 0, startContainer);
+                if (result.getParameterResult().getFirstInserted(mdb.getParameter("/cFS/MessageId")) == null) {
+                    throw new AssertionError("Stream root " + rootName
+                            + " did not decode the MID; start at /cFS/CCSDS_PrimaryHeader");
+                }
                 verifyHeader(mdb, result, expected);
                 if (result.getContainerResult().stream()
                         .noneMatch(c -> c.getContainer().getQualifiedName().equals(prefix + name))) {
                     throw new AssertionError("Wrong telemetry container for " + name);
+                }
+                if (!(prefix + name).equals(XtceTmRecorder.deriveArchivePartition(result))) {
+                    throw new AssertionError("Wrong archive partition for " + prefix + name);
+                }
+                var recorded = recorderExtractor.processPacket(expected, 0, 0, 0, startContainer);
+                if (!(prefix + name).equals(XtceTmRecorder.deriveArchivePartition(recorded))) {
+                    throw new AssertionError("Wrong recorder partition for " + prefix + name);
                 }
                 for (var entry : values.entrySet()) {
                     var parameter = mdb.getParameter(prefix + name + "_" + entry.getKey());
@@ -95,7 +124,7 @@ public class VerifyCfsMdb {
                 System.arraycopy(headerTail, 0, variant, 6, headerTail.length);
                 variant[2] = (byte) 0xA3;
                 variant[3] = 0x45;
-                verifyHeader(mdb, extractor.processPacket(variant, 0, 0, 0), variant);
+                verifyHeader(mdb, extractor.processPacket(variant, 0, 0, 0, startContainer), variant);
                 telemetry++;
             }
         }
@@ -105,6 +134,7 @@ public class VerifyCfsMdb {
         }
         System.out.printf("PASS: %d command packets match C byte for byte; %d telemetry packets decode correctly%n",
                 commands, telemetry);
+        System.out.println("Stream root verified from instance configuration: " + rootName);
     }
 
     private static void verifyHeader(org.yamcs.mdb.Mdb mdb,

@@ -94,7 +94,8 @@ streamConfig:
   tm:
     - name: tm_realtime
       processor: realtime
-      rootContainer: /cFS/CCSDS_Telemetry
+      # Start at the primary header so MID is decoded before matching TM containers.
+      rootContainer: /cFS/CCSDS_PrimaryHeader
   tc:
     - name: tc_realtime
       processor: realtime
